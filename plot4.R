@@ -1,0 +1,13 @@
+pcData <- read.delim("household_power_consumption.txt", header = TRUE, sep = ";")
+pcData <- pcData[ which(pcData$Date == "1/2/2007" | pcData$Date == "2/2/2007"), ]
+pcData$Date <- strptime(paste(pcData$Date,pcData$Time), "%d/%m/%Y %H:%M:%S")
+par(mfcol=c(2,2), mar=c(3.6, 3, 3, 1.5))
+plot(pcData$Date,as.numeric(as.character(pcData$Global_active_power)), type = "l", ylab="Global Active Power", xlab = "",cex.lab=0.75, cex.axis=0.75, mgp = c (2, .5, 0 ))
+plot(pcData$Date,as.numeric(as.character(pcData$Sub_metering_1)), type = "l", ylab="Energy sub metering", xlab = "", cex.lab=0.75, cex.axis=0.75, mgp = c (2, .5, 0 ), tck=-.04)
+lines(pcData$Date,as.numeric(as.character(pcData$Sub_metering_2)),col="red")
+lines(pcData$Date,as.numeric(as.character(pcData$Sub_metering_3)),col="blue")
+legend('topright', c("Sub_metering_1","Sub_metering_2","Sub_metering_3") , lwd=1, col=c('black', 'red', 'blue'), bty = "n", cex=.75)
+plot(pcData$Date,as.numeric(as.character(pcData$Voltage)), type = "l", ylab="Voltage", xlab = "datetime", cex.lab=0.75, cex.axis=0.75, mgp = c (2, .5, 0 ))
+plot(pcData$Date,as.numeric(as.character(pcData$Global_reactive_power)), type = "l", ylab="Global_reactive_power", xlab = "datetime", cex.lab=0.75, cex.axis=0.75, mgp = c (2, .5, 0 ))
+dev.copy(png,'plot4.png', width = 480, height = 480, units = "px")
+dev.off()
